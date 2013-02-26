@@ -1,0 +1,44 @@
+rules:
+    onPlayerJoin:
+        enabled: true
+        '1': 'This is the default rules'
+        '2': 'This is the default rules'
+        '3': 'This is the default rules'
+        '4': 'This is the default rules'
+        '5': 'This is the default rules'
+    page1:
+        '1': 'This is the default rules'
+        '2': 'This is the default rules'
+        '3': 'This is the default rules'
+        '4': 'This is the default rules'
+        '5': 'This is the default rules'
+    page2:
+        '1': 'This is the default rules'
+        '2': 'This is the default rules'
+        '3': 'This is the default rules'
+        '4': 'This is the default rules'
+        '5': 'This is the default rules'
+    page3:
+        '1': 'This is the default rules'
+        '2': 'This is the default rules'
+        '3': 'This is the default rules'
+        '4': 'This is the default rules'
+        '5': 'This is the default rules'
+    page4:
+        '1': 'This is the default rules'
+        '2': 'This is the default rules'
+        '3': 'This is the default rules'
+        '4': 'This is the default rules'
+        '5': 'This is the default rules'
+    page5:
+        '1': 'This is the default rules'
+        '2': 'This is the default rules'
+        '3': 'This is the default rules'
+        '4': 'This is the default rules'
+        '5': 'This is the default rules'
+    page6:
+        '1': 'This is the default rules'
+        '2': 'This is the default rules'
+        '3': 'This is the default rules'
+        '4': 'This is the default rules'
+        '5': 'This is the default rules'
