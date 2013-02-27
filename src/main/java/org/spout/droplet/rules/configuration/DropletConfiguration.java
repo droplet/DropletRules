@@ -45,36 +45,9 @@ public class DropletConfiguration extends YamlConfiguration {
 
 	public static void setConfig() throws ConfigurationException{
 		try {
-			DropletRules.getConfig().getNode("Rules.page1.1").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page1.2").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page1.3").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page1.4").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page1.5").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page2.1").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page2.2").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page2.3").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page2.4").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page2.5").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page3.1").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page3.2").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page3.3").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page3.4").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page3.5").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page4.1").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page4.2").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page4.3").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page4.4").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page4.5").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page5.1").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page5.2").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page5.3").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page5.4").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page5.5").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page6.1").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page6.2").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page6.3").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page6.4").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.page6.5").setValue("This is the Default rules");
+			DropletRules.getConfig().getNode("Rules.Page1.1").setValue("1. Default rule 1");
+			DropletRules.getConfig().getNode("Rules.1.1").setValue("18. Default rule 18");
+			DropletRules.getConfig().getNode("Rules.4.1").setValue("34. Default rule 34 (tee-hee)");
 			DropletRules.getConfig().getNode("Rules.onPlayerJoin.enabled").setValue(true);
 			DropletRules.getConfig().getNode("Rules.onPlayerJoin.1").setValue("This is the Default rules");
 			DropletRules.getConfig().getNode("Rules.onPlayerJoin.2").setValue("This is the Default rules");
@@ -82,7 +55,7 @@ public class DropletConfiguration extends YamlConfiguration {
 			DropletRules.getConfig().getNode("Rules.onPlayerJoin.4").setValue("This is the Default rules");
 			DropletRules.getConfig().getNode("Rules.onPlayerJoin.5").setValue("This is the Default rules");
 			DropletRules.getConfig().save();
-		}catch (ConfigurationException e) {
+		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
 	}
