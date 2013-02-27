@@ -28,29 +28,15 @@ import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.player.PlayerJoinEvent;
 
-public class EListener implements Listener {
-	private DropletRules plugin;
-
-	public EListener(DropletRules instance) {
-		this.plugin = instance;
-	}
-
+public class DropletListener implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		try {
-			if (player != null && DropletRules.config.getNode("rules.onPlayerJoin.enabled").getBoolean() == true) {
-				player.sendMessage (DropletRules.p7l1);
-				player.sendMessage (DropletRules.p7l2);
-				player.sendMessage (DropletRules.p7l3);
-				player.sendMessage (DropletRules.p7l4);
-				player.sendMessage (DropletRules.p7l5);
-				player.sendMessage (DropletRules.p7l6);
-				return;
-				}
-		} catch (NullPointerException e) {
-			plugin.getLogger().warning(DropletRules.error);
-			e.printStackTrace();
+		if (player != null && DropletRules.config.getNode("rules.onPlayerJoin.enabled").getBoolean()) {
+			for (String string : DropletRules.getInstance().onJoin) {
+				player.sendMessage(string);
+			}
+			return;
 		}
 	}
 }
