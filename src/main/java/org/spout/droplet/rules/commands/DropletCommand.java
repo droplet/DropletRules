@@ -23,24 +23,28 @@
  */
 package org.spout.droplet.rules.commands;
 
-import org.spout.api.command.annotated.NestedCommand;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.exception.CommandException;
 
 import org.spout.droplet.rules.DropletRules;
-import org.spout.droplet.rules.commands.NestedCommands;
 
-public class PlayerCommands {
-	private final DropletRules plugin;
-
-	public PlayerCommands(DropletRules instance) {
-		this.plugin = instance;
-	}
-
-	@Command(aliases = {"rules", "rulez", "rule"}, desc = "Displays pages of rules", min = 0, max = 0)
-	@NestedCommand(NestedCommands.class)
+public class DropletCommand {
+	@Command(aliases = {"ruleset"}, desc = "Displays the rules")
 	public void rules(CommandContext args, CommandSource source) throws CommandException {
+		int page = 0;
+		if (args.length() > 0) {
+			if (args.isInteger(0)) {
+				page = args.getInteger(0);
+			} else {
+				throw new CommandException(args.getString(0) + " is not a valid integer!");
+			}
+		}
+
+		for (String rule : DropletRules.getInstance().rules.get(page)) {
+			source.sendMessage(rule);
+		}
+		source.sendMessage("To see the next page, do /rules " + (page + 1));
 	}
 }
