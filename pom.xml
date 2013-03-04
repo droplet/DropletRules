@@ -6,7 +6,7 @@
 	<name>DropletRules</name>
 	<groupId>org.spout.droplet</groupId>
 	<artifactId>rules</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<url>http://www.spout.org</url>
 	<inceptionYear>2013</inceptionYear>
 	<description>Rules "Droplet" plugin for the Spout platform to demonstrate the usage of chat and commands.</description>
@@ -37,9 +37,9 @@
 
 	<!-- Source code access -->
 	<scm>
-		<developerConnection>scm:git:git@github.com:Droplets/DropletRules.git</developerConnection>
-		<connection>scm:git:git://github.com/Droplets/DropletRules.git</connection>
-		<url>https://github.com/Droplets/DropletRules</url>
+		<developerConnection>scm:git:git@github.com:Droplet/DropletRules.git</developerConnection>
+		<connection>scm:git:git://github.com/Droplet/DropletRules.git</connection>
+		<url>https://github.com/Droplet/DropletRules</url>
 	</scm>
 
 	<!-- Build server -->
