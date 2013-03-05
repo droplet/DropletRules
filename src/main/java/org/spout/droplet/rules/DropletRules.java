@@ -60,8 +60,7 @@ public class DropletRules extends CommonPlugin {
 	@Override
 	public void onEnable() {
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		RootCommand root = getEngine().getRootCommand();
-		root.addSubCommands(this, DropletCommand.class, commandRegFactory);
+		commandRegFactory.create(this, DropletCommand.class, getEngine().getRootCommand());
 
 		getLogger().info("DropletRules has been enabled");
 	}
