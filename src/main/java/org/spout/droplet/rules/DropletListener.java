@@ -29,11 +29,16 @@ import org.spout.api.event.Listener;
 import org.spout.api.event.player.PlayerJoinEvent;
 
 public class DropletListener implements Listener {
+	
+	private final DropletRules plugin;
+	public DropletListener(DropletRules plugin) {
+		this.plugin = plugin;
+	}
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		if (player != null && DropletRules.config.getNode("rules.onPlayerJoin.enabled").getBoolean()) {
-			for (String string : DropletRules.getInstance().onJoin) {
+		if (player != null && DropletRules.config.getNode("onPlayerJoin.enabled").getBoolean()) {
+			for (String string : plugin.getInstance().onJoin) {
 				player.sendMessage(string);
 			}
 			return;
