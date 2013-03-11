@@ -34,10 +34,10 @@ import org.spout.api.command.RootCommand;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
+import org.spout.api.exception.ConfigurationException;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.yaml.YamlConfiguration;
-
 import org.spout.droplet.rules.commands.DropletCommand;
 import org.spout.droplet.rules.configuration.DropletConfiguration;
 
@@ -59,19 +59,25 @@ public class DropletRules extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		RootCommand root = getEngine().getRootCommand();
+		final CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(getEngine(), new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+		final RootCommand root = getEngine().getRootCommand();
 		root.addSubCommands(this, DropletCommand.class, commandRegFactory);
-
+		
+		getEngine().getEventManager().registerEvents(new DropletListener(this), this);
 		getLogger().info("DropletRules has been enabled");
 	}
 
 	@Override
 	public void onDisable() {
+		try {
+			config.save();
+		} catch (ConfigurationException e) {
+			e.printStackTrace();
+		}
 		getLogger().info("DropletRules has been disabled");
 	}
 
-	public static DropletRules getInstance() {
+	public DropletRules getInstance() {
 		return instance;
 	}
 
@@ -81,11 +87,8 @@ public class DropletRules extends CommonPlugin {
 
 	public void ruleCheck() {
 		ConfigurationNode node = config.getNode("Rules");
-		int i = 0;
+		int i = 1;
 		for (String key : node.getKeys(true)) {
-			if (key.equalsIgnoreCase("onPlayerJoin")) {
-				continue;
-			}
 			ConfigurationNode node1 = node.getChild(key);
 			List<String> list = node1.getStringList();
 			if (list != null) {
@@ -97,13 +100,19 @@ public class DropletRules extends CommonPlugin {
 	}
 
 	public void rulesOnJoin() {
-		if (config.getNode("rules.onPlayerJoin.enabled").getBoolean()) {
-			ConfigurationNode node = config.getNode("Rules.onPlayerJoin");
-			onJoin.addAll(node.getStringList());
+		if (config.getNode("onPlayerJoin.enabled").getBoolean() == true) {
+			ConfigurationNode node = config.getNode("onPlayerJoin.rules");
+			for (String key : node.getKeys(true)) {
+				ConfigurationNode node1 = node.getChild(key);
+				List<String> list = node1.getStringList();
+				if (list != null) {
+					onJoin.addAll(list);
+					}
+			}
 			onJoin.add("To see the rest of the rules use /rules 1");
 			getLogger().info("Player join rules are loaded");
-		} else {
-			getLogger().info("Rules displayed on player join has been disabled");
-		}
+		}else getLogger().info("Rules displayed on player join has been disabled");
+
 	}
+		
 }

@@ -23,6 +23,9 @@
  */
 package org.spout.droplet.rules.configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
@@ -33,30 +36,35 @@ public class DropletConfiguration extends YamlConfiguration {
 		try {
 			DropletRules.getConfig().load();
 			DropletRules.getConfig().setPathSeparator(".");
-			if (DropletRules.config.getNode("rules.onPlayerJoin.enabled").getValue() != null) {
-				if (!DropletRules.getConfig().getNode("rules").isAttached()) {
+			if (!DropletRules.getConfig().getNode("rules").isAttached()) {
 					setConfig();
 				}
+			if (DropletRules.config.getNode("onPlayerJoin.enabled").getValue() == null) {
+				DropletRules.getConfig().getNode("onPlayerJoin.enabled").setValue(true);
 			}
+			DropletRules.getConfig().save();
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void setConfig() throws ConfigurationException{
-		try {
-			DropletRules.getConfig().getNode("Rules.Page1.1").setValue("1. Default rule 1");
-			DropletRules.getConfig().getNode("Rules.1.1").setValue("18. Default rule 18");
-			DropletRules.getConfig().getNode("Rules.4.1").setValue("34. Default rule 34 (tee-hee)");
-			DropletRules.getConfig().getNode("Rules.onPlayerJoin.enabled").setValue(true);
-			DropletRules.getConfig().getNode("Rules.onPlayerJoin.1").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.onPlayerJoin.2").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.onPlayerJoin.3").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.onPlayerJoin.4").setValue("This is the Default rules");
-			DropletRules.getConfig().getNode("Rules.onPlayerJoin.5").setValue("This is the Default rules");
-			DropletRules.getConfig().save();
-		} catch (ConfigurationException e) {
-			e.printStackTrace();
-		}
+	public static void setConfig(){
+		List<String> rules1 = new ArrayList<String>();
+		rules1.add("1. Default rule 1");
+		rules1.add("2. Default rule 2");
+		List<String> rules2 = new ArrayList<String>();
+		rules2.add("11. Default rule 11");
+		rules2.add("12. Default rule 22");
+		List<String> rules3 = new ArrayList<String>();
+		rules3.add("31. Default rule 31");
+		rules3.add("34. Default rule 34 (tee-hee)");
+		List<String> rulesonjoin = new ArrayList<String>();
+		rulesonjoin.add("This is the default rules");
+		rulesonjoin.add("This is the default rules");
+		DropletRules.getConfig().getNode("Rules.1").setValue(rules1);
+		DropletRules.getConfig().getNode("Rules.2").setValue(rules2);
+		DropletRules.getConfig().getNode("Rules.4").setValue(rules3);
+		DropletRules.getConfig().getNode("onPlayerJoin.enabled").setValue(true);
+		DropletRules.getConfig().getNode("onPlayerJoin.rules").setValue(rulesonjoin);
 	}
 }
