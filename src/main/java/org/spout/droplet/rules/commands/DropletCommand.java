@@ -27,24 +27,29 @@ import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.exception.CommandException;
-
 import org.spout.droplet.rules.DropletRules;
 
 public class DropletCommand {
-	@Command(aliases = {"ruleset"}, desc = "Displays the rules")
+	private final DropletRules plugin;
+	public DropletCommand(DropletRules plugin) {
+		this.plugin = plugin;
+	}
+		
+	@Command(aliases = {"ruleset","rules"}, desc = "Displays the rules")
 	public void rules(CommandContext args, CommandSource source) throws CommandException {
 		int page = 0;
 		if (args.length() > 0) {
 			if (args.isInteger(0)) {
 				page = args.getInteger(0);
-			} else {
-				throw new CommandException(args.getString(0) + " is not a valid integer!");
-			}
+			} else throw new CommandException(args.getString(0) + " is not a valid integer!");
 		}
-
-		for (String rule : DropletRules.getInstance().rules.get(page)) {
+		try{
+			for (String rule : plugin.rules.get(page)) {
 			source.sendMessage(rule);
-		}
-		source.sendMessage("To see the next page, do /rules " + (page + 1));
+			}
+			source.sendMessage("To see the next page, do /rules " + (page + 1));
+		} catch (NullPointerException e){
+			source.sendMessage("There are no rules on that poge :O");		
+		}	
 	}
 }
