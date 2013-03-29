@@ -1,44 +1,16 @@
+on-player-join:
+    enabled: true
+    rules:
+    - 'Welcome to the server'
 rules:
-    onPlayerJoin:
-        enabled: true
-        '1': 'This is the default rules'
-        '2': 'This is the default rules'
-        '3': 'This is the default rules'
-        '4': 'This is the default rules'
-        '5': 'This is the default rules'
-    page1:
-        '1': 'This is the default rules'
-        '2': 'This is the default rules'
-        '3': 'This is the default rules'
-        '4': 'This is the default rules'
-        '5': 'This is the default rules'
-    page2:
-        '1': 'This is the default rules'
-        '2': 'This is the default rules'
-        '3': 'This is the default rules'
-        '4': 'This is the default rules'
-        '5': 'This is the default rules'
-    page3:
-        '1': 'This is the default rules'
-        '2': 'This is the default rules'
-        '3': 'This is the default rules'
-        '4': 'This is the default rules'
-        '5': 'This is the default rules'
-    page4:
-        '1': 'This is the default rules'
-        '2': 'This is the default rules'
-        '3': 'This is the default rules'
-        '4': 'This is the default rules'
-        '5': 'This is the default rules'
-    page5:
-        '1': 'This is the default rules'
-        '2': 'This is the default rules'
-        '3': 'This is the default rules'
-        '4': 'This is the default rules'
-        '5': 'This is the default rules'
-    page6:
-        '1': 'This is the default rules'
-        '2': 'This is the default rules'
-        '3': 'This is the default rules'
-        '4': 'This is the default rules'
-        '5': 'This is the default rules'
+    1:
+    - 'these'
+    - 'are'
+    - 'example'
+    - 'rules'
+    3:
+    - 'this page is called 3 but is the second page'
+    2:
+    - 'this page is called'
+    - '2 but is the third'
+    - 'page'

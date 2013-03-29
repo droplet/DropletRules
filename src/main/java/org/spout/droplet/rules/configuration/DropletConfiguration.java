@@ -23,48 +23,81 @@
  */
 package org.spout.droplet.rules.configuration;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.spout.api.exception.ConfigurationException;
+import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
 import org.spout.droplet.rules.DropletRules;
 
-public class DropletConfiguration extends YamlConfiguration {
-	public static void loadConfig() {
+public class DropletConfiguration {
+	private YamlConfiguration config;
+
+	private Map<Integer, List<String>> rules;
+	private List<String> rulesOnJoin;
+	private boolean showRulesOnJoin;
+
+	public DropletConfiguration(DropletRules plugin) {
+		config = new YamlConfiguration(new File(plugin.getDataFolder(), "config.yml"));
+	}
+
+	public Map<Integer, List<String>> getRules() {
+		return rules;
+	}
+
+	public List<String> getRulesOnJoin() {
+		return rulesOnJoin;
+	}
+
+	public boolean showRulesOnJoin() {
+		return showRulesOnJoin;
+	}
+
+	public void loadConfig() {
 		try {
-			DropletRules.getConfig().load();
-			DropletRules.getConfig().setPathSeparator(".");
-			if (!DropletRules.getConfig().getNode("rules").isAttached()) {
-				setConfig();
+			config.load();
+			config.setPathSeparator(".");
+			config.setWritesDefaults(true);
+			if (!config.getNode("rules").isAttached()) {
+				setDefaults();
 			}
-			if (DropletRules.config.getNode("onPlayerJoin.enabled").getValue() == null) {
-				DropletRules.getConfig().getNode("onPlayerJoin.enabled").setValue(true);
+			if (!config.getNode("on-player-join.enabled").isAttached()) {
+				config.getNode("on-player-join.enabled").setValue(true);
 			}
-			DropletRules.getConfig().save();
+			ConfigurationNode node = config.getNode("rules");
+			int i = 1;
+			for (String key : node.getKeys(true)) {
+				ConfigurationNode node1 = node.getChild(key);
+				List<String> list = node1.getStringList();
+				rules.put(i, list);
+				i++;
+			}
+			rulesOnJoin = config.getNode("on-player-join.rules").getStringList(Arrays.asList("Welcome to the server!"));
+			showRulesOnJoin = config.getNode("on-player-join.enable").getBoolean(true);
+			config.save();
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void setConfig(){
-		List<String> rules1 = new ArrayList<String>();
-		rules1.add("1. Default rule 1");
-		rules1.add("2. Default rule 2");
-		List<String> rules2 = new ArrayList<String>();
-		rules2.add("11. Default rule 11");
-		rules2.add("12. Default rule 22");
-		List<String> rules3 = new ArrayList<String>();
-		rules3.add("31. Default rule 31");
-		rules3.add("34. Default rule 34 (tee-hee)");
-		List<String> rulesonjoin = new ArrayList<String>();
-		rulesonjoin.add("This is the default rules");
-		rulesonjoin.add("This is the default rules");
-		DropletRules.getConfig().getNode("Rules.1").setValue(rules1);
-		DropletRules.getConfig().getNode("Rules.2").setValue(rules2);
-		DropletRules.getConfig().getNode("Rules.4").setValue(rules3);
-		DropletRules.getConfig().getNode("onPlayerJoin.enabled").setValue(true);
-		DropletRules.getConfig().getNode("onPlayerJoin.rules").setValue(rulesonjoin);
+	public void saveConfig() {
+		try {
+			config.save();
+		} catch (ConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void setDefaults() {
+		config.getNode("rules.1").setValue(Arrays.asList("these", "are", "example", "rules"));
+		config.getNode("rules.2").setValue(Arrays.asList("this", "is", "page", "number", "two"));
+		config.getNode("rules.4").setValue(Arrays.asList("this", "is", "page", "three"));
+		config.getNode("on-player-join.enabled").setValue(true);
+		config.getNode("on-player-join.rules").setValue(Arrays.asList("Welcome to the server!", "Rules:", "No Griefing", "Have Fun"));
 	}
 }
