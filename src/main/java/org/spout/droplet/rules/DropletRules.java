@@ -42,73 +42,42 @@ import org.spout.droplet.rules.commands.DropletCommand;
 import org.spout.droplet.rules.configuration.DropletConfiguration;
 
 public class DropletRules extends CommonPlugin {
-	private static DropletRules instance;
-	public static YamlConfiguration config;
-	public final Map<Integer, List<String>> rules = new HashMap<Integer, List<String>>();
-	public final List<String> onJoin = new ArrayList<String>();
+	private DropletConfiguration config = null;
 
 	@Override
 	public void onLoad() {
-		instance = this;
-		config = (new YamlConfiguration(new File(getDataFolder(), "config.yml")));
-		DropletConfiguration.loadConfig();
-		ruleCheck();
-		rulesOnJoin();
+		config = new DropletConfiguration(this);
+		config.loadConfig();
 	}
 
 	@Override
 	public void onEnable() {
-		final CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(getEngine(), new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		final RootCommand root = getEngine().getRootCommand();
-		root.addSubCommands(this, DropletCommand.class, commandRegFactory);		
+		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(getEngine(), new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+		RootCommand root = getEngine().getRootCommand();
+		root.addSubCommands(this, DropletCommand.class, commandRegFactory);
 		getEngine().getEventManager().registerEvents(new DropletListener(this), this);
 		getLogger().info("DropletRules has been enabled");
 	}
 
 	@Override
 	public void onDisable() {
-		try {
-			config.save();
-		} catch (ConfigurationException e) {
-			e.printStackTrace();
-		}
+		config.saveConfig();
 		getLogger().info("DropletRules has been disabled");
 	}
 
-	public DropletRules getInstance() {
-		return instance;
-	}
-
-	public static YamlConfiguration getConfig() {
+	public DropletConfiguration getConfig() {
 		return config;
 	}
 
-	public void ruleCheck() {
-		ConfigurationNode node = config.getNode("Rules");
-		int i = 1;
-		for (String key : node.getKeys(true)) {
-			ConfigurationNode node1 = node.getChild(key);
-			List<String> list = node1.getStringList();
-			if (list != null) {
-				rules.put(i, list);
-				i++;
-			}
-		}
-		getLogger().info("Rules have been loaded");
+	public Map<Integer, List<String>> getRules() {
+		return config.getRules();
 	}
 
-	public void rulesOnJoin() {
-		if (config.getNode("onPlayerJoin.enabled").getBoolean() == true) {
-			ConfigurationNode node = config.getNode("onPlayerJoin.rules");
-			for (String key : node.getKeys(true)) {
-				ConfigurationNode node1 = node.getChild(key);
-				List<String> list = node1.getStringList();
-				if (list != null) {
-					onJoin.addAll(list);
-				}
-			}
-			onJoin.add("To see the rest of the rules use /rules 1");
-			getLogger().info("Player join rules are loaded");
-		}else getLogger().info("Rules displayed on player join has been disabled");
+	public List<String> getRulesForJoin() {
+		return config.getRulesOnJoin();
+	}
+
+	public boolean showRulesOnJoin() {
+		return config.showRulesOnJoin();
 	}
 }
