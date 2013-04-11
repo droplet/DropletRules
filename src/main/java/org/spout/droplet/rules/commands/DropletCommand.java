@@ -48,17 +48,13 @@ public class DropletCommand {
 				throw new CommandException(args.getString(0) + " is not a valid integer!");
 			}
 		}
-		try {
-			List<String> list = plugin.getRules().get(page);
-			if (list == null) {
-				throw new CommandException("That page doesn't exist!");
-			}
-			for (String rule : list) {
-				source.sendMessage(rule);
-			}
-			source.sendMessage("To see the next page, do /rules " + (page + 1));
-		} catch (NullPointerException e) {
-			source.sendMessage("There are no rules on that poge :O");
+		List<String> list = plugin.getRules().get(page);
+		if (list == null) {
+			throw new CommandException("That page doesn't exist!");
 		}
+		for (String rule : list) {
+			source.sendMessage(rule);
+		}
+		source.sendMessage("To see the next page, do /rules " + (page + 1));
 	}
 }
