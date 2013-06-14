@@ -28,13 +28,13 @@ import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.player.PlayerJoinEvent;
 
-public class DropletListener implements Listener {	
+public class DropletListener implements Listener {
 	private final DropletRules plugin;
 
 	public DropletListener(DropletRules plugin) {
 		this.plugin = plugin;
 	}
-	
+
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
