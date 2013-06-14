@@ -25,7 +25,7 @@ package org.spout.droplet.rules.commands;
 
 import java.util.List;
 
-import org.spout.api.command.CommandContext;
+import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.exception.CommandException;
@@ -39,7 +39,7 @@ public class DropletCommand {
 	}
 
 	@Command(aliases = { "ruleset", "rules" }, desc = "Displays the rules")
-	public void rules(CommandContext args, CommandSource source) throws CommandException {
+	public void foo(CommandSource source, CommandArguments args) throws CommandException {
 		int page = 0;
 		if (args.length() > 0) {
 			if (args.isInteger(0)) {

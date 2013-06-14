@@ -23,25 +23,15 @@
  */
 package org.spout.droplet.rules;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.spout.api.command.CommandRegistrationsFactory;
-import org.spout.api.command.RootCommand;
-import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
-import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
-import org.spout.api.command.annotated.SimpleInjector;
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.plugin.CommonPlugin;
-import org.spout.api.util.config.ConfigurationNode;
-import org.spout.api.util.config.yaml.YamlConfiguration;
+import org.spout.api.command.annotated.AnnotatedCommandExecutorFactory;
+import org.spout.api.plugin.Plugin;
 import org.spout.droplet.rules.commands.DropletCommand;
 import org.spout.droplet.rules.configuration.DropletConfiguration;
 
-public class DropletRules extends CommonPlugin {
+public class DropletRules extends Plugin {
 	private DropletConfiguration config = null;
 
 	@Override
@@ -52,9 +42,7 @@ public class DropletRules extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(getEngine(), new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		RootCommand root = getEngine().getRootCommand();
-		root.addSubCommands(this, DropletCommand.class, commandRegFactory);
+		AnnotatedCommandExecutorFactory.create(new DropletCommand(this));
 		getEngine().getEventManager().registerEvents(new DropletListener(this), this);
 		getLogger().info("DropletRules has been enabled");
 	}
