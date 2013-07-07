@@ -28,10 +28,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.ConfigurationNode;
-import org.spout.api.util.config.yaml.YamlConfiguration;
-
+import org.spout.cereal.config.ConfigurationException;
+import org.spout.cereal.config.ConfigurationNode;
+import org.spout.cereal.config.yaml.YamlConfiguration;
 import org.spout.droplet.rules.DropletRules;
 
 public class DropletConfiguration {
